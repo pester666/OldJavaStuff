@@ -1,0 +1,38 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+public class ToolPanel extends JPanel {
+	MapWindow window;
+	JButton eraserButton;
+	
+	/**
+	 * Konstruktor des ToolPanels.
+	 * @param layer
+	 */
+	public ToolPanel(final MapWindow window){
+		this.window = window;
+		eraserButton = new JButton("Eraser");
+		
+		eraserButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				window.tool.setMouseStatus(1);
+			}
+		});
+		add(eraserButton, BorderLayout.SOUTH);
+	}
+
+	
+}

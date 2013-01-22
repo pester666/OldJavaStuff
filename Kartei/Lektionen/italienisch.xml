@@ -1,0 +1,58 @@
+<list>
+  <gui.KarteiKarte>
+    <id>0</id>
+    <phasenNummer>0</phasenNummer>
+    <frage>il ragazzo</frage>
+    <antwort>der freche Bursche</antwort>
+    <abfrageDatum>2009-12-04 08:43:37.237 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>1</id>
+    <phasenNummer>0</phasenNummer>
+    <frage>italiano</frage>
+    <antwort>pervovore</antwort>
+    <abfrageDatum>2009-12-04 08:43:38.377 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>2</id>
+    <phasenNummer>0</phasenNummer>
+    <frage>brego</frage>
+    <antwort>grazie</antwort>
+    <abfrageDatum>2009-12-03 12:35:28.47 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>3</id>
+    <phasenNummer>3</phasenNummer>
+    <frage>il marino de la rossa</frage>
+    <antwort>si si</antwort>
+    <abfrageDatum>2009-12-03 12:35:28.813 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>4</id>
+    <phasenNummer>3</phasenNummer>
+    <frage>il bambino</frage>
+    <antwort>das Kind</antwort>
+    <abfrageDatum>2009-12-03 12:35:29.406 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>5</id>
+    <phasenNummer>3</phasenNummer>
+    <frage>del a morte</frage>
+    <antwort>bona sera</antwort>
+    <abfrageDatum>2009-12-03 12:35:29.985 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>6</id>
+    <phasenNummer>3</phasenNummer>
+    <frage>uno due</frage>
+    <antwort>dre quadttro</antwort>
+    <abfrageDatum>2009-12-03 12:35:30.484 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>7</id>
+    <phasenNummer>3</phasenNummer>
+    <frage>veni vidi</frage>
+    <antwort>vici</antwort>
+    <abfrageDatum>2009-12-03 12:35:32.641 CET</abfrageDatum>
+  </gui.KarteiKarte>
+</list>

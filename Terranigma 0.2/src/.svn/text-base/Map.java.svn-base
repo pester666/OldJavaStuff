@@ -1,0 +1,94 @@
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+
+public class Map {
+	
+	int[][][] map;
+	int TILE_WIDTH = 32;
+	int TILE_HEIGHT = 32;
+	
+	String mapName;
+	String tilesetName;
+	
+	ArrayList<BufferedImage> tileset = new ArrayList<BufferedImage>();
+	
+	/**
+	 * Map konstruktor zum einlesen eines Tilesets und speichern
+	 * 
+	 * @param map
+	 * @param dataName der name des TileSets
+	 * @param name der Name der Map
+	 */
+	public Map(int[][][] map, String dataName, String name) {
+		if(map == null && dataName == null && name == null){
+			this.map = new int[1][0][0];
+			return;
+		}
+		this.mapName = name;
+		this.map = map;
+		changeTileset(dataName);
+		for (int x = 0; x < map.length; x++) {
+			for (int y = 0; y < map[x].length; y++) {
+				for (int l = 1; l < map[x][y].length; l++) {
+					map[x][y][l] = -1;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Liefert ein Bild anhand der angegebenen Koordinaten.
+	 * @param x
+	 * @param y
+	 * @return tile
+	 */
+	public BufferedImage getTileImage(int x, int y, int layer) {
+		int tileID = map[x][y][layer];
+		if(tileID < 0 || tileset.size() <= 0){
+			return null;
+		}
+		return tileset.get(tileID);
+	}
+	
+	/**
+	 * Setzt ein neue Tile-ID an einer Stelle der Map.
+	 * @param x
+	 * @param y
+	 * @param tileID
+	 */
+	public void setTile(int x, int y, int layer, int tileID) {
+		map[x][y][layer] = tileID;
+	}
+	
+	/**
+	 * Befüllt das Tileset mit einzelnen Bildern.
+	 * Sollte bereits ein Tileset vorhanden sein wird dieses gelöscht und neu befüllt.
+	 * @param tileSetName
+	 */
+	public void changeTileset(String tileSetName){
+		try {
+			this.tilesetName = tileSetName;
+			if(this.tileset.size() > 0){
+				this.tileset.removeAll(tileset);
+			}
+			BufferedImage pictureTileset = ImageIO.read(new File(tileSetName));
+			int width = pictureTileset.getWidth() / TILE_WIDTH;
+			int height = pictureTileset.getHeight() / TILE_HEIGHT;
+			for(int x=0;x<width;x++)
+			{
+				for(int y=0;y<height;y++)
+				{
+					BufferedImage tile=pictureTileset.getSubimage(x* TILE_WIDTH, y*TILE_HEIGHT, 32, 32);
+					this.tileset.add(tile);
+				}				
+			}
+		} catch (IOException e) {
+			System.err.println("Tileset " + tileSetName + " nicht gefunden.");
+			e.printStackTrace();
+		}
+	}
+}

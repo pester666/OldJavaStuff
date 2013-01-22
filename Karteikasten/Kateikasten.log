@@ -1,0 +1,40 @@
+25.01.2010,11:49 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Neue Abfrage gestartet
+25.01.2010,11:50 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Eine Karte wurde aktualisiert
+25.01.2010,11:50 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Name der Gespeicherten Karte/Lektion: englisch
+25.01.2010,11:50 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Eine Karte wurde aktualisiert
+25.01.2010,11:50 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Name der Gespeicherten Karte/Lektion: englisch
+25.01.2010,12:25 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Neue Abfrage gestartet
+25.01.2010,15:06 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Neue Abfrage gestartet
+25.01.2010,15:07 INFO  [AWT-EventQueue-0] gui.Mainframe: Eine Karte wurde aktualisiert
+25.01.2010,15:07 INFO  [AWT-EventQueue-0] gui.Mainframe: Alle Karten werden gedruckt
+25.01.2010,16:00 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Neue Abfrage gestartet
+25.01.2010,16:00 INFO  [AWT-EventQueue-0] gui.Mainframe: Karten der Phase werden gedruckt
+25.01.2010,16:00 INFO  [AWT-EventQueue-0] gui.Mainframe: Alle Karten werden gedruckt
+25.01.2010,16:01 INFO  [AWT-EventQueue-0] gui.Mainframe: Eine Karte wurde hinzugefügt
+25.01.2010,16:01 INFO  [AWT-EventQueue-0] gui.Mainframe: Eine Karte wurde aktualisiert
+25.01.2010,16:01 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Neue Abfrage gestartet
+19.02.2010,12:25 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Neue Abfrage gestartet
+08.04.2010,15:37 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Neue Abfrage gestartet
+08.04.2010,15:37 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Neue Abfrage gestartet
+08.04.2010,15:37 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Neue Abfrage gestartet
+31.08.2010,10:52 INFO  [AWT-EventQueue-0] gui.KartenSpielPanel: Neue Abfrage gestartet
+09.12.2011,10:13 ERROR [main] gui.Mainframe: Beim Laden der Lektionsliste ist ein Fehler aufgetreten: 
+java.sql.SQLException: ORA-01017: invalid username/password; logon denied
+
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:145)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:331)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:283)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:278)
+	at oracle.jdbc.driver.T4CTTIoauthenticate.receiveOauth(T4CTTIoauthenticate.java:791)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:376)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:466)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:165)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:35)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:839)
+	at java.sql.DriverManager.getConnection(DriverManager.java:582)
+	at java.sql.DriverManager.getConnection(DriverManager.java:185)
+	at gui.KarteiKastenDAODBImpl.getUDBConnection(KarteiKastenDAODBImpl.java:214)
+	at gui.KarteiKastenDAODBImpl.getLektionen(KarteiKastenDAODBImpl.java:29)
+	at gui.KartensatzAuswahl.<init>(KartensatzAuswahl.java:58)
+	at gui.Mainframe.initGui(Mainframe.java:102)
+	at gui.Mainframe.main(Mainframe.java:53)

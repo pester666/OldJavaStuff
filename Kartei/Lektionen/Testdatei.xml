@@ -1,0 +1,39 @@
+<list>
+  <gui.KarteiKarte>
+    <id>0</id>
+    <phasenNummer>1</phasenNummer>
+    <frage>test von</frage>
+    <antwort>der datei</antwort>
+    <erfassungsDatum>2009-12-18 08:26:33.424 CET</erfassungsDatum>
+    <abfrageDatum>2011-12-09 10:12:32.547 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>1</id>
+    <phasenNummer>1</phasenNummer>
+    <frage>testen der</frage>
+    <antwort>datei</antwort>
+    <erfassungsDatum>2009-12-16 13:29:32.540 CET</erfassungsDatum>
+    <abfrageDatum>2009-12-22 14:54:17.434 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>0</id>
+    <phasenNummer>0</phasenNummer>
+    <frage>test von</frage>
+    <antwort>der datei</antwort>
+    <erfassungsDatum>2009-12-18 08:26:33.424 CET</erfassungsDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>0</id>
+    <phasenNummer>0</phasenNummer>
+    <frage>test test test</frage>
+    <antwort>check check check</antwort>
+    <erfassungsDatum>2009-12-18 08:29:08.840 CET</erfassungsDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>2</id>
+    <phasenNummer>0</phasenNummer>
+    <frage>zonk</frage>
+    <antwort>bonk</antwort>
+    <erfassungsDatum>2009-12-18 08:33:00.667 CET</erfassungsDatum>
+  </gui.KarteiKarte>
+</list>

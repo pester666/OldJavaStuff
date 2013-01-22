@@ -1,0 +1,5 @@
+401/credits:2275
+476/gas:65
+534/steel:1410
+152/food:3415
+401/population:785

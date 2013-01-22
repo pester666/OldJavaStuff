@@ -1,0 +1,130 @@
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+
+public class MapDialog extends JDialog {
+
+	MapWindow window;
+	
+	JTextField mapName = new JTextField();
+	JTextField mapWidth = new JTextField();
+	JTextField mapHeight = new JTextField();
+	JTextField mapLayer = new JTextField();
+	
+	String[] ts;
+	
+	JComboBox comboTileSets;
+	
+	JLabel name = new JLabel("Name:");
+	JLabel tileSetName = new JLabel("Tileset:");
+	JLabel width = new JLabel("Width:");
+	JLabel height = new JLabel("Height:");
+	JLabel layer = new JLabel("Layer:");
+	
+	JButton okay = new JButton("Okay");
+	
+	/**
+	 * Konstruktor des MapDialogs.
+	 * Initialisiert die Labels und TextFields des Dialogs.
+	 * 
+	 * @param mWindow
+	 */
+	public MapDialog(MapWindow mWindow) {
+		super(mWindow, "Karte erstellen");
+		window = mWindow;
+		
+		Dimension dim = new Dimension(100, 20);
+		
+		mapWidth.setPreferredSize(dim);
+		mapHeight.setPreferredSize(dim);
+		mapLayer.setPreferredSize(dim);
+		mapName.setPreferredSize(dim);
+		
+		height.setPreferredSize(dim);
+		layer.setPreferredSize(dim);
+		width.setPreferredSize(dim);
+		name.setPreferredSize(dim);
+		tileSetName.setPreferredSize(dim);
+		
+		okay.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				createMap();
+			}
+		});		
+		okay.setMnemonic(KeyEvent.VK_O);
+		
+		//Holt sich alle verfügbaren Tilesets aus dem tileSet Ordner
+		File tilesetsInDirectory = new File("tileSet");
+		ts = tilesetsInDirectory.list();
+		//Sortiert ungültige Dateien aus
+		for (int i = 0; i < ts.length; i++) {
+			if(!ts[i].endsWith(".png")){
+				ts[i] = null;
+			}
+		}
+		comboTileSets = new JComboBox(ts);
+		
+		setSize(250, 200);
+		setLayout(new FlowLayout());
+		
+		add(name);
+		add(mapName);
+		
+		add(width);
+		add(mapWidth);
+		
+		add(height);
+		add(mapHeight);
+		add(layer);
+		add(mapLayer);
+		add(tileSetName);
+		add(comboTileSets);
+		add(okay);
+		
+		setVisible(true);
+	}
+
+	/**
+	 * Erstellt eine neue Karte anhand der eingegeben Werte.
+	 */
+	public String createMap() {
+		int width = 0;
+		int height = 0;
+		int layer = 0;
+		try {
+			width = Integer.parseInt(mapWidth.getText());
+			height = Integer.parseInt(mapHeight.getText());
+			layer = Integer.parseInt(mapLayer.getText());
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "Please validate your entries!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		
+		int[][][] map = new int [width][height][layer];
+		
+		String name = mapName.getText();
+		String tileset = "tileSet/" + ts[comboTileSets.getSelectedIndex()];
+		
+		window.actualMap = new Map(map, tileset, name);
+		
+		window.mapView.setMapSize();
+		window.palette.repaint();
+		window.mapView.repaint();
+		window.mapView.scrollPane.repaint();
+		window.repaint();
+		dispose();
+		return name;
+	}
+}

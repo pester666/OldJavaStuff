@@ -1,0 +1,16 @@
+1:0:true:Ground:Empty Space:false
+2:1:false:Refinery:Creates Gas:true
+3:1:false:Refinery:Creates Gas:true
+4:0:true:Ground:Empty Space:false
+5:1:false:Harvester:Provides Food:true
+6:7:false:Palace:Your House, also provides all ressources:true
+7:8:false:Mine:Provides Steel:true
+8:1:false:Refinery:Creates Gas:true
+9:0:true:Ground:Empty Space:false
+10:0:true:Ground:Empty Space:false
+11:0:true:Ground:Empty Space:false
+12:0:true:Ground:Empty Space:false
+13:0:true:Ground:Empty Space:false
+14:3:false:Refinery:Creates Gas:true
+15:3:false:Refinery:Creates Gas:true
+16:0:true:Ground:Empty Space:false

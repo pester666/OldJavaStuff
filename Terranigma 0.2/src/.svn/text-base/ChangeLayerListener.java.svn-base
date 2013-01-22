@@ -1,0 +1,25 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+/**
+ * Listener des Tool Panels
+ *
+ */
+public class ChangeLayerListener implements ActionListener {
+	MapWindow window;
+
+	public ChangeLayerListener(MapWindow window) {
+		this.window = window;
+
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		System.out.println(e.getActionCommand());
+		window.layer.setLayer(Integer.parseInt(e.getActionCommand()));
+		
+		window.footer.updateLayersView(" Layer: "+e.getActionCommand());
+	}
+
+}

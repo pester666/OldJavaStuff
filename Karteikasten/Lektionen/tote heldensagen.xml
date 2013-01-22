@@ -1,0 +1,38 @@
+<list>
+  <gui.KarteiKarte>
+    <id>0</id>
+    <phasenNummer>0</phasenNummer>
+    <frage>der Nebelschleier sinkt hernieder</frage>
+    <antwort>auf Felder, Wald und Tal</antwort>
+    <abfrageDatum>2009-12-16 13:15:27.8 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>1</id>
+    <phasenNummer>4</phasenNummer>
+    <frage>erheben sich die Schatten</frage>
+    <antwort>aus den Gräbern grau und fahl</antwort>
+    <abfrageDatum>2009-12-16 13:15:28.274 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>2</id>
+    <phasenNummer>0</phasenNummer>
+    <frage>Ihre Fahnen stolz erhoben</frage>
+    <antwort>drohen sie wie Flammen lohend</antwort>
+    <abfrageDatum>2009-12-16 13:15:29.164 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>3</id>
+    <phasenNummer>4</phasenNummer>
+    <frage>hörst du ihren Ruf erhallen</frage>
+    <antwort>wie er wird aus den Wäldern schallen, laut und klar sie  dringen noch bis heute an mein Ohr</antwort>
+    <abfrageDatum>2009-12-16 13:15:30.70 CET</abfrageDatum>
+  </gui.KarteiKarte>
+  <gui.KarteiKarte>
+    <id>4</id>
+    <phasenNummer>4</phasenNummer>
+    <frage>Wie ein Wind so fliegen wir</frage>
+    <antwort>in den Kampf hinein</antwort>
+    <erfassungsDatum>2009-12-01 11:01:35.996 CET</erfassungsDatum>
+    <abfrageDatum>2009-12-16 13:15:32.477 CET</abfrageDatum>
+  </gui.KarteiKarte>
+</list>

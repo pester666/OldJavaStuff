@@ -1,0 +1,35 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class InfoFooter extends JPanel {
+	JLabel coordsView = new JLabel("x: 0 y: 0");
+	JLabel layersView = new JLabel("layer: 0");
+	
+	/**
+	 * Konstruktor des InfoFooter-Panels.
+	 */
+	public InfoFooter() {
+		setPreferredSize(new Dimension(1400, 40));
+		add(coordsView, BorderLayout.SOUTH);
+		add(layersView, BorderLayout.SOUTH);
+	}
+	
+	/**
+	 * Setzt die aktuellen Maus-Koordinaten in der Anzeige sowie das Label.
+	 * @param tileCoords
+	 */
+	public void updateCoordsView(String tileCoords){
+		coordsView.setText(tileCoords);
+	}
+	
+	/**
+	 * Zeigt die Ebene auf der man sich aktuell befindet
+	 * @param tileCoords
+	 */
+	public void updateLayersView(String actualLayer){
+		layersView.setText(actualLayer);
+	}
+}

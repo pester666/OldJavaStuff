@@ -1,0 +1,407 @@
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+
+
+@SuppressWarnings("serial")
+public class TreePanel extends JPanel {
+
+    JTree tree;
+    MapWindow window;
+    DefaultMutableTreeNode treeNode;
+    DefaultTreeModel treeModel;
+
+    /**
+     * Konstruktor des TreePanel.
+     * 
+     * @param window
+     */
+    public TreePanel(MapWindow window) {
+
+        this.window = window;
+        treeNode = new DefaultMutableTreeNode("Areas");
+        createNodes(treeNode);
+        treeModel = new DefaultTreeModel(treeNode);
+        tree = new JTree(treeModel);
+        tree.setCellRenderer(new TreePanelRenderer());
+        tree.addTreeSelectionListener(new TreePanelListener(window));
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        JScrollPane scrP = new JScrollPane(tree);
+
+        JButton btnAddMap = new JButton("Add Map");
+        btnAddMap.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addMap();
+            }
+        });
+
+        JButton btnAddLand = new JButton("Add Land");
+        btnAddLand.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addLand();
+            }
+        });
+
+        JButton btnRemoveMapOrLand = new JButton("Remove");
+        btnRemoveMapOrLand.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeMapOrLand();
+            }
+        });
+
+        JButton btnChangeTileset = new JButton("Change Tileset");
+        btnChangeTileset.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeTileset();
+            }
+        });
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(2, 2));
+        buttonPanel.add(btnAddLand);
+        buttonPanel.add(btnAddMap);
+        buttonPanel.add(btnRemoveMapOrLand);
+        buttonPanel.add(btnChangeTileset);
+
+        this.setLayout(new BorderLayout());
+        this.add(buttonPanel, BorderLayout.SOUTH);
+        this.add(scrP, BorderLayout.CENTER);
+    }
+
+    /**
+     * Erstellt sämtliche Nodes im Tree und fügt diese zur Root hinzu
+     * 
+     * @param treeNode
+     */
+    private void createNodes(DefaultMutableTreeNode treeNode) {
+        File areaFile = new File("mapdata");
+        String[] areas = areaFile.list();
+
+        String[] maps = null;
+
+        for (int i = 0; i < areas.length; i++) {
+            if (areas[i].endsWith(".svn")) {
+                continue;
+            }
+            DefaultMutableTreeNode landNode = new DefaultMutableTreeNode(areas[i]);
+            landNode.setAllowsChildren(true);
+            //Sortiert überflüssige Dateien aus (hier .svn)
+            treeNode.add(landNode);
+            maps = new File("mapdata/" + areas[i]).list();
+            //Sortiert überflüssige Dateien aus (hier .svn)
+            for (int j = 0; j < maps.length; j++) {
+                if (maps[j].endsWith(".svn")) {
+                    continue;
+                }
+                DefaultMutableTreeNode mapNode = new DefaultMutableTreeNode(maps[j]);
+                mapNode.setAllowsChildren(false);
+                landNode.add(mapNode);
+            }
+        }
+    }
+
+    /**
+     * Ruft die Methode zum erstellen einer Karte auf
+     * 
+     * @return Eine neue Node vom Typ Karte
+     */
+    private DefaultMutableTreeNode addMap() {
+        DefaultMutableTreeNode parentNode = null;
+        TreePath parentPath = tree.getSelectionPath();
+
+        if (parentPath == null) {
+            JOptionPane.showMessageDialog(this, "Please select a land to create the Map in!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+            return null;
+        } else {
+            parentNode = (DefaultMutableTreeNode)(parentPath.getLastPathComponent());
+        }
+
+        return addObject(parentNode, true);
+    }
+
+    /**
+     * Ruft die Methode zum erstellen eines Landes auf
+     * 
+     * @return Eine neue Node vom Typ Land
+     */
+    private DefaultMutableTreeNode addLand() {
+        return addObject(null, true);
+    }
+
+    /**
+     * Methode zum erstellen einer Karte oder eines Landes
+     * 
+     * @param parent
+     * @param shouldBeVisible
+     * @return Eine neue Node vom Typ Land oder Karte
+     */
+    private DefaultMutableTreeNode addObject(DefaultMutableTreeNode parent, boolean shouldBeVisible) {
+        String mapName = null;
+        boolean isLand = false;
+        //Hier wird geprüft ob es einen parent gibt, wenn nein dann handelt es sich um ein Land
+        if (parent == null) {
+            mapName = createNewLandName();
+            if (mapName == null) {
+                return null;
+            }
+            File f = new File("mapdata/" + mapName);
+            f.mkdir();
+            parent = treeNode;
+            isLand = true;
+        } else {
+            if (!new File("mapdata/" + parent.toString()).isDirectory()) {
+                JOptionPane.showMessageDialog(this, "You cannot create a map inside a map!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            mapName = createNewMapName();
+            if (mapName == null) {
+                return null;
+            }
+            isLand = false;
+            try {
+                //Speichert die neue Karte auf der Festplatte
+                FileOutputStream fOut = new FileOutputStream(new File("mapdata/" + parent.toString() + "/" + window.actualMap.mapName));
+                BufferedOutputStream bufOut = new BufferedOutputStream(fOut);
+                ObjectOutputStream write = new ObjectOutputStream(bufOut);
+                write.writeObject(window.actualMap.map);
+                write.writeObject(window.actualMap.mapName);
+                write.writeObject(window.actualMap.tilesetName);
+                write.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(mapName);
+        if (isLand) {
+            childNode.setAllowsChildren(true);
+        } else {
+            childNode.setAllowsChildren(false);
+        }
+
+        // It is key to invoke this on the TreeModel, and NOT
+        // DefaultMutableTreeNode
+        treeModel.insertNodeInto(childNode, parent, parent.getChildCount());
+
+        // Make sure the user can see the lovely new node.
+        if (shouldBeVisible) {
+            tree.scrollPathToVisible(new TreePath(childNode.getPath()));
+        }
+
+        return childNode;
+    }
+
+    /**
+     * Methode zum definieren des Namens einens neuen Landes
+     * 
+     * @return der Name des Landes
+     */
+    private String createNewLandName() {
+        String landName = (String)JOptionPane.showInputDialog(this, "Enter new landname", "Land Creation", JOptionPane.PLAIN_MESSAGE);
+        if ((landName == null) || (landName.length() <= 0)) {
+            JOptionPane.showMessageDialog(this, "You canceled the creation!", "Land creation failed", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        return landName;
+    }
+
+    /**
+     * Methode zum definieren der Karten Eigenschaften und setzten der
+     * actualMap. Hier werden die Eingaben der Eigenschaften ebenfalls auf
+     * Gültigkeit geprüft.
+     * 
+     * @return der Name der neuen Karte
+     */
+    private String createNewMapName() {
+
+        int width = 0;
+        int height = 0;
+        int layer = 0;
+
+        //In den nachfolgenden Blöcken wird je eine Information gesammelt und gespeichert
+
+        //Abfrage des Karten-Namens
+        String fieldName = (String)JOptionPane.showInputDialog(this, "Enter the name of the new map:", "Map Creation", JOptionPane.PLAIN_MESSAGE);
+
+        if ((fieldName == null) || (fieldName.length() <= 0)) {
+            JOptionPane.showMessageDialog(this, "You canceled the creation!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        //In diesen Blöcken werden die Informationen an den Benutzer weitergebeben
+        String actualData = "Mapname: " + fieldName + "\n" + "Width: " + width + "\n" + "Heigth: " + height + "\n" + "Layercount: " + layer + "\n\n";
+
+        //Abfrage der Karte-Breite
+        String fieldWidth = (String)JOptionPane.showInputDialog(this, actualData + "Enter the width:", "Map Creation", JOptionPane.PLAIN_MESSAGE);
+        if ((fieldWidth == null) || (fieldWidth.length() <= 0)) {
+            JOptionPane.showMessageDialog(this, "You canceled the creation!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        try {
+            width = Integer.parseInt(fieldWidth);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please validate your entries!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        actualData = "Mapname: " + fieldName + "\n" + "Width: " + width + "\n" + "Heigth: " + height + "\n" + "Layercount: " + layer + "\n\n";
+
+        //Abfrage der Karte-Höhe
+        String fieldHeigth = (String)JOptionPane.showInputDialog(this, actualData + "Enter der heigth:", "Map Creation", JOptionPane.PLAIN_MESSAGE);
+        if ((fieldHeigth == null) || (fieldHeigth.length() <= 0)) {
+            JOptionPane.showMessageDialog(this, "You canceled the creation!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        try {
+            height = Integer.parseInt(fieldHeigth);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please validate your entries!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        actualData = "Mapname: " + fieldName + "\n" + "Width: " + width + "\n" + "Heigth: " + height + "\n" + "Layercount: " + layer + "\n\n";
+
+        //Abfrage der Anzahl der Layer der Karte
+        String fieldLayer = (String)JOptionPane.showInputDialog(this, actualData + "Enter the count of layers:", "Map Creation", JOptionPane.PLAIN_MESSAGE);
+        if ((fieldLayer == null) || (fieldLayer.length() <= 0)) {
+            JOptionPane.showMessageDialog(this, "You canceled the creation!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        try {
+            layer = Integer.parseInt(fieldLayer);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please validate your entries!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        actualData = "Mapname: " + fieldName + "\n" + "Width: " + width + "\n" + "Heigth: " + height + "\n" + "Layercount: " + layer + "\n\n";
+
+        String tileSetName = getTilesets(actualData, "Map Creation");
+
+        if ((tileSetName == null) || (tileSetName.length() <= 0)) {
+            JOptionPane.showMessageDialog(this, "You canceled the creation!", "Map creation failed", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        //Ab hier wird die neue Karte erstellt und im Window gespeichert sowie GUI-Elemente repainted
+        Tile[][] map = new Tile[width][height];
+        for (int x = 0; x < map.length; x++) {
+            for (int y = 0; y < map[x].length; y++) {
+                ArrayList<Integer> layerList = new ArrayList<Integer>();
+                for (int l = 0; l < layer; l++) {
+                    layerList.add(-1);
+                }
+                map[x][y] = new Tile(layerList, true, new ArrayList<Event>());
+            }
+        }
+
+        String tileset = "tileSet/" + tileSetName;
+
+        window.actualMap = new Map(map, tileset, fieldName);
+        window.setTitle("Terranigma 0.2 - " + fieldName);
+        window.layerPanel.updateLayerCount();
+        window.mapView.setMapSize();
+        window.palette.repaint();
+        window.mapView.repaint();
+        window.mapView.scrollPane.repaint();
+        window.layerPanel.repaint();
+        window.repaint();
+        return fieldName;
+    }
+
+    /**
+     * Löscht eine Karte bzw. ein Land mit sämtlichen Karten aus dem Tree und
+     * aus dem Verzeichnis
+     */
+    private void removeMapOrLand() {
+        TreePath currentSelection = tree.getSelectionPath();
+        if (currentSelection != null) {
+            DefaultMutableTreeNode currentNode = (DefaultMutableTreeNode)(currentSelection.getLastPathComponent());
+            MutableTreeNode parent = (MutableTreeNode)(currentNode.getParent());
+            if (parent != null) {
+                treeModel.removeNodeFromParent(currentNode);
+                File f = new File("mapdata/" + parent + "/" + currentNode.toString());
+                //Prüft ob das zu löschende Objekt ein Ordner ist, wenn ja wird eine Abfrage ausgelöst
+                if (f.isDirectory()) {
+                    int n = JOptionPane.showConfirmDialog(this, "Are u sure to delete the whole folder?", "Removal", JOptionPane.YES_NO_OPTION);
+                    if (n == JOptionPane.YES_OPTION) {
+                        String[] filesToDelete = f.list();
+                        for (int i = 0; i < filesToDelete.length; i++) {
+                            File del = new File(f.getPath() + filesToDelete[i]);
+                            del.delete();
+                        }
+                        f.delete();
+                    }
+                } else {
+                    f.delete();
+                }
+                window.actualMap = new Map(null, null, null);
+                window.setTitle("Terranigma 0.2 - Startscreen");
+                window.repaint();
+                window.mapView.repaint();
+                return;
+            }
+        }
+    }
+
+    /**
+     * Ändert das Tileset. Dabei bleiben sämtliche ID's bestehen. ---> d.h. es
+     * wird nur das Tileset verändert, die Karte bleibt mit den ID's (!!!)
+     * gleich
+     */
+    private void changeTileset() {
+        window.actualMap.changeTileset("tileSet/" + getTilesets(null, "Change Tileset"));
+        window.mapView.repaint();
+        window.palette.repaint();
+        window.repaint();
+    }
+
+    /**
+     * Methode zum beziehen sämtlicher Tilesets.
+     * 
+     * @param actualData Die aktullen Daten beim erstellen einer Karte
+     * @return das ausgewählte Tileset
+     */
+    private String getTilesets(String actualData, String type) {
+        //Hier werden alle Tilesets ausgelesen und einer Liste hinzugefügt
+        File tilesetsInDirectory = new File("tileSet");
+        String[] ts = tilesetsInDirectory.list();
+        //Sortiert ungültige Dateien aus
+        for (int i = 0; i < ts.length; i++) {
+            if (!ts[i].endsWith(".png")) {
+                ts[i] = null;
+            }
+        }
+        //Hier wird der Dialog geöffnet mit dem ein Tileset ausgewählt werden kann
+        String tileSetName = (String)JOptionPane.showInputDialog(this, actualData + "Choose the Tileset:", type, JOptionPane.PLAIN_MESSAGE, null, ts, 1);
+        return tileSetName;
+    }
+}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="release" name="Tabletop">
+	<!--Auto generated ant build file-->
+	<property name="project.base.dir" value="." />
+	<property name="src.dir" value="src" />
+	<property name="lib.dir" value="lib" />
+	<property name="build.dir" value="build" />
+	<property name="mainclass.name" value="code.DMG" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="resources.dir" value="bin/resources" />
+	<property name="app.name" value="Peter Holmeier Tabletop" />
+	
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	
+	<!-- *******************************************************************************
+	***    init:      Initialisierung
+	******************************************************************************** -->
+	<target name="init">
+		<echo>Initialisierung</echo>
+	</target>
+	
+	<!-- *******************************************************************************
+	***    compile:      Kompilieren der Klassen 
+	******************************************************************************** -->
+	<target depends="init" name="compile">
+		<mkdir dir="${build.dir}"/>
+		<javac srcdir="${src.dir}/code" destdir="${build.dir}" fork="true" source="1.6" target="1.6" classpathref="project.classpath"/>
+		<copy todir="${build.dir}/resources">
+			<fileset dir="${resources.dir}"/>
+		</copy>	
+	</target>
+	
+	<!-- *******************************************************************************
+	***    clean:      Löschen der Build-Ergebnisse 
+	******************************************************************************** -->
+	<target depends="init" name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+	
+	<!-- *******************************************************************************
+	***    jar:       Umwandeln in ein JAR-File
+	******************************************************************************** -->
+	<target depends="compile" name="jar">
+		<copy todir="${build.dir}">
+			<fileset dir="${lib.dir}"/>
+		</copy>
+		
+		<jar destfile="${build.dir}/tabletop.jar" basedir="${build.dir}" excludes="**.jar">
+			<manifest>
+				<attribute name="Main-Class" value="${mainclass.name}"/>
+				<attribute name="Class-Path" value="looks-1.3b1.jar"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- *******************************************************************************
+	***    release:       Macht noch nichts
+	******************************************************************************** -->
+	<target depends="zip" name="release">
+		<mkdir dir="${build.dir}/release"/>
+		<move file="${build.dir}/tabletop.zip" todir="${build.dir}/release"></move>
+	</target>
+	
+	<!-- *******************************************************************************
+	***    zip:       Wandelt das build-Verzeichnis in eine Zip-Datei
+	******************************************************************************** -->
+	<target depends="jar" name="zip">
+		<zip destfile="${build.dir}/tabletop.zip" basedir="${build.dir}"></zip>		
+	</target>
+</project>

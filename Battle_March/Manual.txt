@@ -1,0 +1,93 @@
+Welcome!
+
+Are you a pirate? No? Great!
+
+The main content of this game is fighting! Every unit has its own profile and weapon. Atm there is an hot-seat multiplayer-support for 4 players. 
+
+Have fun at playing!
+
+1. Basics of Eisenkreuzkrieger:
+1A.The Menubar
+	- In the Properties-Menu you can set a period of time, as there are Fantasy, Future and WW2. 
+		Also there is the possibility to change the amount of points each player can spend to buy units.
+		And at last there is the option to start the fucking game!!
+		You can also delete the activ game and create a new one. Therefor you have to
+		change the age, change the amount of points or switch to the deployment-phase.
+
+1B.The Screen
+	- In the middle of the window is the 'Gamebord'. Here you act with your units.
+	- Below is the so called 'Command-Panel'. Here are several functions you can use during the game.
+		- At the left there is the 'Status-Panel'. If you click a unit, its stats will be displayed here.
+		- Next to the Status-Panel is the 'Deploy-Panel'. During the deployment-phase you can switch the
+		  owning player and the unit you want to place. Beside the unit name is the amount of Gold the unit
+		  costs.
+		  During the game here you can see witch player is active and how big the game is.
+		- On the right there is your 'Command-Panel'. There are several buttons to use:
+			- Move: Move an own unit to another location.
+			- Attack: Attack an enemy unit.
+			- Defend: Not yet implemented.
+			- Finish: End your turn.
+			- Sell Unit: Sell a unit to get the gold back. Only available during deployment.
+			- Buy Unit: Buy a unit to extend your army. Only available during deployment.
+
+1C. Unit-Characteristics:
+Here your get a short overview of the stats each unit has.
+	- Name: The Name of the unit
+	- Movement (MV): How far the unit can walk in one turn.
+	- Strength (S): How good the unit can wound enemys.
+	- Toughness (T): How good the unit can resist attacks.
+	- Melee (WS): The weaponskill of the unit in close combat. Needed to hit an enemy.
+	- Attacks (A): The amount of attacks the unit has.	
+	- Range (R): How far the unit can attack without weapon.
+	- Armorsave (AS): How good the unit is protected against successful attacks.
+	- Gear (G): The weapon the unit is equiped with. There are 4 numbers in the bracket:
+		- Range: How far the weapon reaches. Normal is a range of 1 but ballistic weapons have higher range.
+		- Strength: If its a ballistic weapon this strength is used against the enemy. If its a melee weapon
+		  the strength is added to the owners strength for close combat.
+		- Armorpenetration: This number represents, that some weapons may cut through armor easily. The
+		  lower the number the better you get through the enemys armor.
+		- Rate of Fire: Represents how often you can shoot or how many attacks you get bonus in melee.
+	- Owning Player: The owning player of the selected unit.
+	- Rangedskill: How good the unit can target enemys with an ballisitc weapon.
+	- Already Moved: Marks if the unit has moved this turn already.
+	- Already Attacked: Marks if the unit has attacked this turn already.
+
+2. First Steps to play Eisenkreuzkrieger:
+
+2A. Setting the size of the game
+Choose an amount of points in the Properties-->Set Points Menu. This represents how big you want to make the game.
+Each unit costs some Gold, represented by points, so that there is something like fairness.
+You dont have to spend all of your gold.
+
+2B. The Deployment-Phase
+During the Deployment-Phase (DP) you can spend gold to buy units. Just select a unit in the lower combobox of the deploy-panel and press the 'Buy Unit'-button.
+Now you click on the map an voila! There is the bought unit. You can handle the DP unit by unit or player by player.
+This doesnt matter. On each tile, only one unit can stand.
+
+2C. Starting the game
+If each player has spend all his gold or has bought all units he wanted you can start the game.
+The action for this is in the menu Properties-->START THE GAME. After pressing this button, 
+no other units can be bought or sold so do it whisely or you will have to start at the beginning. 
+
+2D. The Battle-Phase
+Since the game was started you will notice that the four action-buttons now will be enabled.
+If you want to select a unit, simply click on the unit you want to move or attack with to show 
+its stats in the lower left corner. If you want to see an enemys units stats do it as you do it with your own units. If you want to deselect an unit click it again.
+	2Da. Move a unit: 
+		If you want to move a unit, simply click on it and the 'Move'-Button. After that click
+		another tile in range of the selected unit to move it there. Remember that you can only move a unit
+		once per turn.
+	2Db. Attack an unit in close combat:
+		If you want to attack an enemy in close combat you will have to stand next to that unit. So click on
+		your unit and the 'Attack'-Button to make sure, your unit wants to fight! After that click on an
+		enemy unit next to the selected one. Now your unit makes an close combat attack against an enemy.
+	2Dc. Attack an unit with ballistic weapons:
+		To shoot at an enemy you will have to do the same procedure as attack the unit in close combat with
+		the exception that the target unit must not stand beside of your unit. Your unit also has to be
+		equipped with a ranged weapon. The target unit must though stand in range of the weapon.
+	2Dd. Make a unit defend:
+		Not yet implemented!
+	2De. Finish your turn:
+		If you have moved and attacked with all your units you will have to switch to the next player.
+		Now he can start the same procedures you have made during your turn. Your units will replenish when
+		its your turn after the other players.
